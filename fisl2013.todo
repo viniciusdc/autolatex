@@ -1,0 +1,263 @@
+Brainstorming
+-------------
+
+TODO: 
+
+Exemplos
+
+- having latex do the programming for you: computing margins, counters, sizes
+- cartões de visita
+- calendário
+- ler arquivos: 
+
+\loop\unless\ifeof\file
+    \readline\file to\foo
+    % Do something with \foo
+\repeat
+
+\newread\file
+\openin\file\jobname
+\endlinechar-1
+\tt
+\loop\unless\ifeof\file
+\readline\file to\foo
+\noindent\foo\endgraf
+\repeat
+\bye
+
+Command-line LaTeX
+
+If you work on a Unix-like OS, you might be using Makefiles or any kind of script to build your LaTeX projects. In that connection it might be interesting to produce different versions of the same document by calling LaTeX with command-line parameters. If you add the following structure to your document:
+
+\usepackage{ifthen}
+%...
+
+% default value.
+\providecommand\blackandwhite{false}
+%...
+
+\ifthenelse{ \equal{\blackandwhite}{true} }{
+% "black and white" mode; do something..
+}{
+% "color" mode; do something different..
+}
+
+Now you can call LaTeX like this:
+
+latex '\providecommand{\blackandwhite}{true}\input{test.tex}'
+
+First the command \blackandwhite gets defined and then the actual file is read with input. By setting \blackandwhite to false the color version of the document would be produced.
+
+--------------------------------
+
+Exemplos externos:
+
+- Fibonacci: https://www.sharelatex.com/blog/2012/04/24/latex-is-more-powerful-than-you-think.html#.UbtYjnyrRm4
+LaTeX Programming Examples:
+
+- The Mandlebrot Set in LaTeX [http://warp.povusers.org/MandScripts/latex.html]. Special thanks to this one, this code was a helpful example while writing my Fibonacci command.
+
+- Turing Machine Simulator in LaTeX [http://en.literateprograms.org/Turing_machine_simulator_(LaTeX)]. This is a Turing machine that creates a description of its state as it runs the 3-state busy beaver problem.
+
+- LaTeX in a programming contest [http://sdh33b.blogspot.com/2008/07/icfp-contest-2008.html]. A mars rover controller in LaTeX beat out entries in several more common programming languages.
+
+- BasiX: An Interpreter written in TeX
+--------------------------------
+Fontes: 
+
+Wikibook on TeX commands [http://en.wikibooks.org/wiki/Category:TeX]. 
+
+TeX for the Impatient (wiki books)
+
+TeXBook
+
+--------------------------------
+DONE:
+
+TeX is intentionally Turing-complete (it has conditionals, loops, and recursion), but while it can be made to do amazing things, TeX code tends to be unreadable and painful to debug. (Eric S. Raymond)
+
+- poem in tex
+- basic formatting programming: how to create your own style/class; newcommands
+- variables
+- ingressos com números seriados    
+- Loop recursivo
+\def\foo#1#2{\number#1
+\ifnum#1<#2,
+\expandafter\foo
+\expandafter{\number\numexpr#1+1\expandafter}%
+\expandafter{\number#2\expandafter}%
+\fi}
+- recibo (exemplo)
+- selecionar língua; tradução de trechos de documentos
+
+------------------------
+
+When TEX performs arithmetic on integers, any fractional part of the results
+are discarded. For example,
+\setcounter{x}{7/2}
+\setcounter{y}{3*\real{1.6}}
+\setcounter{z}{3*\real{1.7}}
+will assign the value 3 to the counter x, the value 4 to y, and the value 5 to z.
+This truncation also applies to intermediate results in the sequential computation
+of a composite expression; thus, the following command \setcounter{x}{3 * \real{1.6} * \real{1.7}} will assign 6 to x.
+
+-------------------------
+
+
+--------------------------------
+- condicionais
+Before we discuss TEX’s repertoire of \if... commands, let’s look at another example, so that the general ideas will be clear. Suppose that the \count register \balance holds an amount that somebody has paid in excess of his or her income tax; this amount is given in pennies, and it might be positive, negative, or zero. Our immediate goal will be to write a TEX macro that generates a suitable statement for the Internal Revenue Service to include as part of a letter to that person, based on the amount of the balance. The statement will be quite different for positive balances than for negative ones, so we can exploit TEX’s ability to act conditionally:
+\def\statement{\ifnum\balance=0 \fullypaid
+\else\ifnum\balance>0 \overpaid
+\else\underpaid
+\fi
+\fi}
+Here \ifnum is a macro reduces to conditional command that compares two numbers;\fullypaid if the balance is zero, and so on. the \statement
+
+Continuing the IRS example, assume that \fullypaid and \underpaid are defined as follows:
+\def\fullypaid{Your taxes are fully paid---thank you.}
+\def\underpaid{{\count0=-\balance
+\ifnum\count0<100
+You owe \dollaramount, but you need not pay it, because our policy is to disregard amounts less than \$1.00. 
+\else Please remit \dollaramount\ within ten days,
+or additional interest charges will be due.\fi}}
+Write a macro \overpaid to go with these, assuming that \dollaramount is a macro that generates the contents of \count0 in dollars and cents. Your macro should say that a check will be mailed under separate cover, unless the amount is less than $1.00, in which case the person must specifically request a check.
+
+Now let’s make a complete survey of TEX’s conditional commands. Some of
+them involve features that have not yet been introduced in this manual.
+\ifnum number1 relation number2
+ (compare two integers)
+The relation must be either ‘<12 ’ or ‘=12’ or ‘>12 ’. The two integer numbers are
+compared to each other in the usual way, and the result is true or false accordingly.
+\ifdim dimen1 relation dimen2
+ (compare two dimensions)
+This is like \ifnum, but it compares two dimen values. For example, to test whether the value of \hsize exceeds 100 pt, you can say ‘\ifdim\hsize>100pt’.
+\ifodd number
+ (test for odd integer)
+The condition is true if the number is odd, false if it is even.
+\ifmmode
+ (test for math mode)
+True if TEX is in math mode or display math mode (see Chapter 13).
+\ifeof number
+ (test for end of file)
+The number should be between 0 and 15. The condition is true unless the corresponding input stream is open and not fully read. (See the command \openin below.)
+\iftrue, \iffalse (always true or always false)
+These conditions have a predetermined outcome. But they turn out to be useful in spite of this, as explained below.
+
+--------------------------------
+- Não usados
+
+- whiledo
+- criar mala direta através de contadores
+- geração automática de índices
+- usar encoding certo
+
+It’s time now to reveal another important command of this type:
+\let\cs= token
+ gives \cs the token’s current meaning.
+If the token is another control sequence, \cs will acquire the same significance as
+that control sequence. For example, if you say ‘\let\a=\def’, you could then say
+‘\a\b...{...}’ to define a macro \b, because \a would behave like TEX’s primitive
+\def command. If you say
+\let\a=\b \let\b=\c \let\c=\a
+you have interchanged the former meanings of \b and \c. And if you say
+\outer\def\a#1.{#1:}
+\let\b=\a
+the effect is exactly the same as ‘\outer\def\b#1.{#1:} \let\a=\b’.
+
+\ifvmode
+ (test for vertical mode)
+True if TEX is in vertical mode or internal vertical mode (see Chapter 13).
+\ifhmode
+ (test for horizontal mode)
+True if TEX is in horizontal mode or restricted horizontal mode (see Chapter 13).
+\ifinner
+ (test for an internal mode)
+True if TEX is in internal vertical mode, or restricted horizontal mode, or (nondisplay)
+math mode (see Chapter 13).
+\if token1 token2
+ (test if character codes agree)
+TEX will expand macros following \if until two unexpandable tokens are found. If either token is a control sequence, TEX considers it to have character code 256 and category code 16, unless the current equivalent of that control sequence has been \let equal to a non-active character token. In this way, each token specifies a (character code, category code) pair. The condition is true if the character codes are equal, independent of the category codes. For example, after \def\a{*} and \let\b=* and \def\c{/}, the tests ‘\if*\a’ and ‘\if\a\b’ will be true, but ‘\if\a\c’ will be false. Also ‘\if\a\par’ will be false, but ‘\if\par\let’ will be true.
+\ifcat token1 token2
+ (test if category codes agree)
+This is just like \if, but it tests the category codes, not the character codes. Active characters have category 13, but you have to say ‘\noexpand active character ’ in order to suppress expansion when you are looking at such characters with \if or \ifcat. For example, after
+\catcode‘[=13 \catcode‘]=13 \def[{*} the tests ‘\ifcat\noexpand[\noexpand]’ and ‘\ifcat[*’ will be true, but the test ‘\ifcat\noexpand[*’ will be false.
+\ifx token1 token2
+ (test if tokens agree)
+In this case, TEX does not expand control sequences when it looks at the two tokens. The condition is true if (a) the two tokens are not macros, and they both represent the same (character code, category code) pair or the same TEX primitive or the same \font or \chardef or \countdef, etc.; or if (b) the two tokens are macros, and they both have the same status with respect to \long and \outer, and they both have the same parameters and “top level” expansion. For example, after ‘\def\a{\c} \def\b{\d} \def\c{\e} \def\d{\e} \def\e{A}’, an \ifx test will find \c and \d equal, but not \a and \b, nor \d and \e, nor any other combinations of \a, \b, \c, \d, \e.
+\ifvoid number , \ifhbox number , \ifvbox number
+ (test a box register)
+The number should be between 0 and 255. The condition is true if that \box is void or contains an hbox or a vbox, respectively (see Chapter 15).
+Finally, there’s one more conditional construction, which is somewhat different from the rest because it is capable of making a many-way branch:
+\ifcase number text for case 0 \or text for case 1 \or · · ·
+\or text for case n \else text for all other cases \fi
+Here there are n + 1 cases separated by n \or’s, where n can be any nonnegative number. The number selects the text that will be used. Once again the \else part is optional, if you don’t want to specify any text for cases when the number is negative or greater than n.
+
+-------------------
+In classical Knuth TeX,
+
+\newdimen\len
+\len=\hsize
+\advance\len by -1cm
+
+\newcount\cnt
+\cnt=1
+\advance\cnt by 1
+
+LaTeX with calc,
+
+\usepackage{calc}
+
+\newlength\len
+\setlength{\textwidth+1cm}
+
+\newcounter{cnt}
+\setcounter{cnt}{1+1}
+------------------
+
+Pesquisar:
+
+- \show (p. 21, TeXbook)
+- criar documentos direto do console (p. 34, TeXbook)
+- if (this or that) é possivel?
+
+---------------------------------
+- Expandafter:
+\expandafter <macro> <tokens>
+The \expandafter command delays expanding a macro until its arguments have been expanded.
+Examples
+\def\a[#1]{A's argument was `#1'}
+\def\args{[FOO]}
+\a\args
+will not work, saying "! Use of \a doesn't match its definition." This is because while defining \a, the first argument (denoted #1) appeared in square braces. Therefore, \a expects its first argument to appear in square braces, while in \a\args, the immediate character after \a is not a left square bracket. Using \expandafter, we can write
+\expandafter\a\args
+This expands \args before \a, as if we had written the following in the first place:
+\a[FOO]
+As a result, TeX will print A's argument was `FOO'.
+The \expandafter command first expands the tokens following <macro>, and then expands <macro>, with the expanded <tokens> following it as if they had been typed in the file.
+--------------------------------
+- csname
+
+TeXbook
+When \csname is used to define a control sequence for the first time, that
+control sequence is made equivalent to \relax until it is redefined. Use this fact to design a macro \ifundefined#1 such that, for example,
+\ifundefined{TeX} true text \else false text \fi expands to the true text if \TeX hasn’t previously been defined, or if \TeX has been \let equal to \relax; it should expand to the false text otherwise.
+--------------------------------
+- string
+
+Although control sequences are treated as single objects, TEX does provide
+a way to break them into lists of character tokens: If you write \string\cs, where \cs is any control sequence, you get the list of characters for that control sequence’s name. For example, \string\TeX produces four tokens: \12 , T12 , e12 , X12 . Each character in this token list automatically gets category code 12 (“other”), including the backslash that \string inserts to represent an escape character. However, category 10 will be assigned to the character ‘ ’ (blank space) if a space character somehow sneaks into the name of a control sequence.
+Conversely, you can go from a list of character tokens to a control sequence by saying ‘\csname tokens \endcsname’. The tokens that appear in this construction between \csname and \endcsname may include other control sequences, as long as those control sequences ultimately expand into characters instead of TEX primitives; the final characters can be of any category, not necessarily letters. For example, ‘\csname TeX\endcsname’ is essentially the same as ‘\TeX’; but ‘\csname\TeX\endcsname’ is illegal, because \TeX expands into tokens containing the \kern primitive. Furthermore, ‘\csname\string\TeX\endcsname’ will produce the unusual control sequence ‘\\TeX’,
+i.e., the token \TeX , which you can’t ordinarily write.
+---------------------------------
+- number, romannumeral, uppercase, lowercase
+
+TEX has two other token-producing operations similar to the \string com-
+mand. If you write \number number , you get the decimal equivalent of the
+number ; and if you write \romannumeral number , you get the number expressed in lowercase roman numerals. For example, ‘\romannumeral24’ produces ‘xxiv’, a list of four tokens each having category 12. The \number operation is redundant when it is applied to an explicit constant (e.g., ‘\number24’ produces ‘24’); but it does suppress leading zeros, and it can also be used with numbers that are in TEX’s internal registers or parameters. For example, ‘\number-0015’ produces ‘-15’; and if register \count5 holds the value 316, then ‘\number\count5’ produces ‘316’. 
+
+The twin operations \uppercase{ token list } and \lowercase{ token list }
+go through a given token list and convert all of the character tokens to their “uppercase” or “lowercase” equivalents. Here’s how: Each of the 256 possible characters has two associated values called the \uccode and the \lccode; these values are changeable just as a \catcode is. Conversion to uppercase means that a character is replaced by its \uccode value, unless the \uccode value is zero (when no change is made). Conversion to lowercase is similar, using the \lccode. The category codes aren’t changed. When INITEX begins, all \uccode and \lccode values are zero except that the letters a to z and A to Z have \uccode values A to Z and \lccode values a to z.
+TEX performs the \uppercase and \lowercase transformations in its stomach,
+but the \string and \number and \romannumeral and \csname operations are
+carried out en route to the stomach (like macro expansion), as explained in Chapter 20.
