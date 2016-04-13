@@ -4,7 +4,7 @@ import sys
 def write_texfile(dados):
     
     # Escrever o resultado em um arquivo .tex
-    results = open('chart.tex','w')
+    results = open('piechart.tex','w')
     print >>results, '\\documentclass{article}'
     print >>results, '\\usepackage{calc}'
     print >>results, '\\usepackage{ifthen}'
@@ -34,10 +34,10 @@ def write_texfile(dados):
     results.close()
     # Compilar e mostrar o pdf resultante.
     try:
-        os.system('pdflatex chart.tex')
+        os.system('pdflatex piechart.tex')
     except OSError:
         print('LaTeX not installed.')
-    os.system('xdg-open chart.pdf &')
+    os.system('xdg-open piechart.pdf &')
 
 if __name__ == '__main__':
     dados = {'Debian':15, 'Fedora':6, 'Slackware':6, 'Gentoo':5, 'OpenSUSE': 7, 'Chakra':5, 'Outras': 26}
