@@ -18,7 +18,7 @@
 % Opcoes do beamer
 \setbeamertemplate{footline}
 {%
-   \includegraphics[trim=0mm 7mm 0mm 0mm,clip]{textura_flowers.png}
+   \includegraphics[trim=0mm 7mm 0mm 0mm,clip]{img/textura_flowers.png}
 }
 \usenavigationsymbolstemplate{}
 \setbeamercolor{normal text}{fg=practice}
@@ -41,12 +41,12 @@
 \newcommand{\kw}[1]{\textbackslash {\color{europeanalonis}#1}}
 
 % Informacoes
-\title{\textcolor{europeanalonis}{\LaTeX\ para não-cientistas}} \author[M. Weber Mendonça]
+\title{\textcolor{europeanalonis}{Automatizando a criação de PDFs com \LaTeX+Python}} \author[M. Weber Mendonça]
 {\hspace{-0.3cm}Melissa Weber Mendonça\inst{1}}
 \institute[UFSC]{\inst{1} Universidade Federal de Santa Catarina}
-\date{BLUSOL - 2013}
+\date{Warm up - SciPy-LA 2016}
 
-%\logo{\includegraphics[height=1.5cm]{/home/melissa/Documentos/latex/brasao_UFSC.png}} % Logo para todos os slides. Não incluido nos arquivos distribuidos.
+\logo{\includegraphics[height=1.5cm]{/home/melissa/Dropbox/Documentos/latex/brasao_UFSC.png}} % Logo para todos os slides. Não incluido nos arquivos distribuidos.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
@@ -59,12 +59,12 @@
    \begin{columns}
       \column{5cm}
       \begin{center}
-         \includegraphics[width=4.7cm]{knuth.jpg}\\
+         \includegraphics[width=4.7cm]{img/knuth.jpg}\\
          Donald Knuth
       \end{center}
       \column{5cm}
       \begin{center}
-         \includegraphics[width=4.2cm]{lamport.jpg}\\
+         \includegraphics[width=4.2cm]{img/lamport.jpg}\\
          Leslie Lamport
       \end{center}
    \end{columns}
@@ -82,17 +82,17 @@
       \end{minipage}
       \begin{minipage}{5cm}
          \begin{center}
-            \includegraphics[width=4cm]{saintignuciuscopia.jpg}
+            \includegraphics[width=4cm]{img/saintignuciuscopia.jpg}
          \end{center}
       \end{minipage}
    \end{center}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-   \frametitle{Mas por que usar isso? Não é mais fácil usar o LibreOffice?}
+   \frametitle{Mas por que usar isso? Não é mais fácil usar o *Office?}
    \begin{center}
          \fbox{
-            \includegraphics[width=9.25cm]{exemplo_libreoffice.png}
+            \includegraphics[width=9.25cm]{img/exemplo_libreoffice.png}
             }
       \noindent\framebox[9.6cm]{\parbox{9.25cm}{
             $$\oint B\cdot ds=\mu_0 \epsilon_0 \frac{d\Phi_E}{dt} + \mu_0 i_{enc}$$
@@ -139,10 +139,10 @@
       \end{itemize}
       \column{4cm}
       \begin{tikzpicture}[node distance=2cm, overlay]
-         \node (editor) at (1.5,1.5) {\includegraphics[width=2cm]{editor.png}};
+         \node (editor) at (1.5,1.5) {\includegraphics[width=2cm]{img/editor.png}};
          \node [below of=editor] (dummy) {};
-         \node<2-> [right of=dummy] (terminal) {\includegraphics[width=2cm]{terminal.png}};
-         \node<3-> [below of=dummy] (pdf) {\includegraphics[width=2.5cm]{output.png}};
+         \node<2-> [right of=dummy] (terminal) {\includegraphics[width=2cm]{img/terminal.png}};
+         \node<3-> [below of=dummy] (pdf) {\includegraphics[width=2.5cm]{img/output.png}};
          \path<2->[->] (editor.east) edge [bend left] (terminal.north);
          \path<3->[->] (terminal.south) edge [bend left] (pdf.east);
       \end{tikzpicture}
@@ -203,7 +203,7 @@
    \frametitle{Fontes}
    \begin{figure}[htbp]
       \includegraphics[viewport=100 550 600 750,width=16cm,clip]%
-      {fontes.pdf}
+      {img/fontes.pdf}
       % Fontes usadas: Calligra, Huncial, Sqrcaps, Yfonts, UGQ, Iwona
       % Mais informações no site abaixo.
       % http://www.tug.dk/FontCatalogue/
