@@ -35,7 +35,7 @@ for row in data:
     f.writelines(old[offset:])
     f.close()
 
-# Compilar.
+# Compilar arquivo LaTeX
     try:
         os.system('pdflatex '+filename+'.tex')
         os.system('mv '+filename+'.pdf '+filename+'_'+row[0].replace(' ','_')+'.pdf')
