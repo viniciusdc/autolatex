@@ -1,6 +1,10 @@
 # pylatex
 Presentation about automatic PDF generation with Python+LaTeX
 
+## When/where was this presented?
+
+- FISL2013
+
 ## **Installing all dependencies**
 #### Debian
 ```
